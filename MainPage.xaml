@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ListViewBinding.ViewModels"
+             x:Class="ListViewBinding.MainPage"
+             x:DataType="viewmodels:ColorsViewModel">
+
+    <ContentPage.Resources>
+
+        <DataTemplate x:Key="ListViewItemTemplate"
+                      x:DataType="viewmodels:NamedColor">
+            <ViewCell>
+                <Grid Margin="5,5,5,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0" 
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               Fill="{Binding Color}"
+                               />
+                    <Label Grid.Column="1" 
+                           Margin="5,0,0,0"
+                           Text="{Binding Name}"
+                           VerticalTextAlignment="Center"
+                           />
+
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="StackLayoutItemTemplate"
+                      x:DataType="viewmodels:NamedColor">
+            <Grid Margin="5,0,5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Grid.Column="0" 
+                            HeightRequest="30"
+                            WidthRequest="30"
+                            Fill="{Binding Color}"
+                            />
+                <Label Grid.Column="1" 
+                        Margin="5,0,0,0"
+                        Text="{Binding Name}"
+                        VerticalTextAlignment="Center"
+                        />
+
+            </Grid>
+        </DataTemplate>
+
+    </ContentPage.Resources>
+
+    <Grid Margin="5,5,5,5"
+          HorizontalOptions="Fill"
+          VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="500"/>
+            <!--
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="500"/>
+            -->
+        </Grid.RowDefinitions>
+
+         <Label Text="ListView with StackLayout."
+               Grid.Row="0"
+               Margin="0,0,0,5"
+               FontAttributes="Bold"
+               />
+
+        <ListView ItemsSource="{Binding Nested.Colors}"
+                  Grid.Row="1"
+                  HorizontalOptions="Fill"
+                  VerticalOptions="Fill"
+                  HasUnevenRows="False"
+                  SelectionMode="None"
+                  
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:NestedItem">
+                    <ViewCell>
+                        <StackLayout BindableLayout.ItemsSource="{Binding}"
+                                     BindableLayout.ItemTemplate="{StaticResource StackLayoutItemTemplate}"
+                                     Orientation="Vertical"
+                                     Spacing="5"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        <!-- Comment out the above Label/ListView and uncomment this section to see the 
+             debug output flooded with BindingDiagnostic: Warnings.
+        
+        <Label Text="ListView with 2 BindingDiagnostics: Warnings for each Cell, one for each Binding."
+               Grid.Row="0"
+               Margin="0,0,0,5"
+               FontAttributes="Bold"
+               />
+        
+        <ListView ItemsSource="{Binding Colors}"
+                  ItemTemplate="{StaticResource ListViewItemTemplate}"
+                  Grid.Row="1"
+                  HorizontalOptions="Fill"
+                  VerticalOptions="Fill"
+                  HasUnevenRows="False"
+                  />
+        -->
+
+    </Grid>
+
+</ContentPage>
