@@ -1,5 +1,10 @@
 # ListView BindingContext bug when using ItemsSource and ItemTemplate
 
+See https://github.com/dotnet/maui/issues/13754
+
+Update: Added ListViewBindings.MauiPreview.sln to build against 
+.net 8 Preview and Maui 8.0.0-preview.6.8686
+
 The included sample illustrates 2 issues, both related to the Cell's BindingContext first being set to 
 the ListView's BindingContext.
 
